@@ -45,9 +45,6 @@ class StudentController extends Controller
     $courses = $student->courses;
     $courses = $track ? $track->courses : collect();
     return view('students.show', compact('student', 'track', 'courses'));
-
-
-
 }
 
     /**

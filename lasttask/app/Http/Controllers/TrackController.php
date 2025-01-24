@@ -13,7 +13,8 @@ class TrackController extends Controller
      */
     public function index()
     {
-        //
+        $tracks = Track::paginate(5);
+        return view('tracks.index', compact('tracks'));
     }
 
     /**
@@ -37,8 +38,12 @@ class TrackController extends Controller
      */
     public function show(Track $track)
     {
-        //
-    }
+        $students = $track->student;
+        $students = $track ? $track->students : collect();
+
+        $courses = $track->courses;
+        $courses = $track ? $track->courses : collect();
+        return view('tracks.show', compact('track', 'students', 'courses'));    }
 
     /**
      * Show the form for editing the specified resource.
@@ -61,6 +66,7 @@ class TrackController extends Controller
      */
     public function destroy(Track $track)
     {
-        //
+        $track->delete();
+        return redirect()->route('tracks.index')->with('success', 'تم حذف الترك بنجاح.');
     }
 }
