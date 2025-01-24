@@ -20,10 +20,7 @@ class Course extends Model
 
     public function track()
     {
-        return $this->belongsTo(Track::class);
+        return $this->belongsToMany(Track::class,'course_track');
     }
-    public function students()
-    {
-        return $this->belongsToMany(Student::class, 'course_student', 'course_id', 'student_id');
-    }
+
 }

@@ -23,6 +23,7 @@ class StudentController extends Controller
      */
     public function create()
     {
+        return view('students.create');
 
     }
 
@@ -39,12 +40,14 @@ class StudentController extends Controller
      */
     public function show(Student $student)
 {
-    $student->load('courses', 'track');
-    return view('students.show', [
-        'student' => $student,
-        'courses' => $student->courses,
-        'track' => $student->track,
-    ]);
+
+    $track = $student->track;
+    $courses = $student->courses;
+    $courses = $track ? $track->courses : collect();
+    return view('students.show', compact('student', 'track', 'courses'));
+
+
+
 }
 
     /**
@@ -68,6 +71,7 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
-        
+        $student->delete();
+        return redirect()->route('students.index')->with('success', 'تم حذف الطالب بنجاح.');
     }
 }
